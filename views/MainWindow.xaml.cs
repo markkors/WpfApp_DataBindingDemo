@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +13,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp_DataBindingDemo.models;
+
 
 namespace WpfApp_DataBindingDemo
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
 
         List<myitem> _itemsA = new List<myitem>();
         List<myitem> _itemsB = new List<myitem>();
+        List<myitem> _itemsC = new List<myitem>();
+        private string _SelectedNr5;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindow()
         {
@@ -50,6 +57,12 @@ namespace WpfApp_DataBindingDemo
             _itemsB.Add(new myitem { Name = "Item 1 (code behind binding method 2)", Value = "a" });
             _itemsB.Add(new myitem { Name = "Item 2 (code behind binding method 2)", Value = "b" });
             _itemsB.Add(new myitem { Name = "Item 3 (code behind binding method 2)", Value = "c" });
+
+
+            _itemsC.Add(new myitem { Name = "Item 1 (code behind binding method 3)", Value = "a" });
+            _itemsC.Add(new myitem { Name = "Item 2 (code behind binding method 3)", Value = "b" });
+            _itemsC.Add(new myitem { Name = "Item 3 (code behind binding method 3)", Value = "c" });
+
             this.DataContext = this;
                      
         }
@@ -59,7 +72,18 @@ namespace WpfApp_DataBindingDemo
             get { return _itemsB; } 
         }
 
+        public List<myitem> myItemsC
+        {
+            get { return _itemsC; }
+        }
 
+        public string SelectedNr5 { 
+            get { return _SelectedNr5; } 
+            set { 
+                _SelectedNr5 = value;
+                NotifyPropertyChanged("SelectedNr5");
+            } 
+        }
 
         private void CmbDataCodeBehind2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -73,9 +97,21 @@ namespace WpfApp_DataBindingDemo
             MessageBox.Show("Selected item: " + cmbDataCodeBehind1.SelectedItem.ToString());
         }
 
+       
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ComboBox cmb = (ComboBox)sender;
+            myitem mi = ((myitem)cmb.SelectedItem);
+            SelectedNr5 = mi.Value.ToString();
+        }
 
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 

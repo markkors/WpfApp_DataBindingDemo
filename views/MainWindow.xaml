@@ -90,6 +90,18 @@
             <ComboBox ItemsSource="{Binding myItemsB}"
                       DisplayMemberPath="Name"
                       Margin="5" SelectionChanged="CmbDataCodeBehind2_SelectionChanged"/>
+             
+        </StackPanel>
+
+        <StackPanel Grid.Row="2"
+                    Grid.Column="1">
+            <TextBlock Margin="5"
+                       Text="Data vanuit code-behind 5" />
+            <ComboBox ItemsSource="{Binding myItemsC}"
+                      DisplayMemberPath="Name"
+                      Margin="5" 
+                      SelectionChanged="ComboBox_SelectionChanged"/>
+            <Label Content="{Binding SelectedNr5}" />
         </StackPanel>
 
     </Grid>

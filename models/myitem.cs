@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp_DataBindingDemo
+namespace WpfApp_DataBindingDemo.models
 {
     public class myitem
     {
